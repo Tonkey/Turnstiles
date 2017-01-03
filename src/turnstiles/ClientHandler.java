@@ -3,6 +3,7 @@ package turnstiles;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,6 +15,7 @@ import java.util.logging.Logger;
 public class ClientHandler extends Thread {
 
     private String id = "default";
+    private String type = "";
 
     private Scanner input;
     private PrintWriter writer;
@@ -41,7 +43,8 @@ public class ClientHandler extends Thread {
             String message = input.nextLine(); //IMPORTANT blocking call
             while (!message.equals(ProtocolStrings.STOP)) {
                 System.out.println(message);
-                if (message.equals(ProtocolStrings.TURNSTILE)) {
+                if (message.equals(ProtocolStrings.TURNSTILE) && type.equals("")) {
+                    type = ProtocolStrings.TURNSTILE;
                     send("Waiting for turnstile id");
                     message = input.nextLine();
                     System.out.println(message.substring(0, 6));
@@ -49,9 +52,9 @@ public class ClientHandler extends Thread {
                         message = input.nextLine();
                     }
                     while (id.equals("default")) {
-                        if (checkTurnstileId(message.substring(6))) {
+                        if (checkId(message.substring(6))) {
                             id = message.substring(6);
-                            server.registerTurnstile(this);
+                            server.registerType(this);
                             send("Turnstile registered as: " + id);
                         } else {
                             send("Id already in use");
@@ -61,7 +64,8 @@ public class ClientHandler extends Thread {
                     message = input.nextLine();
                 }
 
-                if (message.equals(ProtocolStrings.MONITOR)) {
+                if (message.equals(ProtocolStrings.MONITOR) && type.equals("")) {
+                    type = ProtocolStrings.MONITOR;
                     send("Waiting for monitor id");
                     message = input.nextLine();
                     System.out.println(message.substring(0, 6));
@@ -69,9 +73,9 @@ public class ClientHandler extends Thread {
                         message = input.nextLine();
                     }
                     while (id.equals("default")) {
-                        if (checkMonitorId(message.substring(6))) {
+                        if (checkId(message.substring(6))) {
                             id = message.substring(6);
-                            server.registerMonitor(this);
+                            server.registerType(this);
                             send("Monitor registered as: " + id);
                         } else {
                             send("Id already in use");
@@ -103,8 +107,13 @@ public class ClientHandler extends Thread {
             server.removeHandler(this);
             System.out.println("Closed a Connection");
         } catch (IOException ex) {
-            System.out.println("something went wrong while closing thread:" + this.getName());
+            System.out.println("IOException caught in thread: " + this.getName());
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
+            server.removeHandler(this);
+        } catch(NoSuchElementException ex){
+            System.out.println("NoSuchElementException caught in thread: " + this.getName());
+            Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE,null,ex);
+            server.removeHandler(this);
         }
 
     }
@@ -121,24 +130,31 @@ public class ClientHandler extends Thread {
         this.id = id;
     }
 
-    private boolean checkTurnstileId(String id) {
-
-        for (ClientHandler ch : server.turnstiles) {
-            if (id.equals(ch.getClientId())) {
-                return false;
-            }
-        }
-
-        return true;
+    public String getType() {
+        return type;
     }
 
-    private boolean checkMonitorId(String id) {
-        for (ClientHandler ch : server.monitors) {
-            if (id.equals(ch.getClientId())) {
+    private boolean checkId(String id) {
+        switch (type) {
+            case ProtocolStrings.TURNSTILE:
+                for (ClientHandler ch : server.turnstiles) {
+                    if (id.equals(ch.getClientId())) {
+                        return false;
+                    }
+                }
+                return true;
+        
+            case ProtocolStrings.MONITOR:
+                for (ClientHandler ch : server.monitors) {
+                    if (id.equals(ch.getClientId())) {
+                        return false;
+                    }
+                }
+                return true;
+                
+            default:
                 return false;
-            }
         }
-        return true;
     }
 
 }
