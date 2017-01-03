@@ -1,12 +1,28 @@
-Jan 03, 2017 11:20:44 PM turnstiles.Server runServer
+Jan 03, 2017 11:28:53 PM turnstiles.Server runServer
 INFO: Starting the Server
-Jan 03, 2017 11:20:44 PM turnstiles.Server runServer
+Jan 03, 2017 11:28:53 PM turnstiles.Server runServer
 INFO: Server started. Listening on: 1337, bound to: localhost
-Jan 03, 2017 11:20:52 PM turnstiles.Server runServer
+Jan 03, 2017 11:29:07 PM turnstiles.Server runServer
 INFO: Current amount of clients connected: 1
-Jan 03, 2017 11:21:01 PM turnstiles.Server registerType
-INFO: Client: Turnstile of Type: ##TURNSTILE## registered in appropiate client list
-Jan 03, 2017 11:21:04 PM turnstiles.Server removeHandler
+Jan 03, 2017 11:29:17 PM turnstiles.Server registerType
+INFO: Client: Turnstile-1 of Type: ##TURNSTILE## registered in appropiate client list
+Jan 03, 2017 11:29:35 PM turnstiles.Server runServer
+INFO: Current amount of clients connected: 2
+Jan 03, 2017 11:29:52 PM turnstiles.Server registerType
+INFO: Client: Turnstile.2 of Type: ##TURNSTILE## registered in appropiate client list
+Jan 03, 2017 11:30:11 PM turnstiles.Server runServer
+INFO: Current amount of clients connected: 3
+Jan 03, 2017 11:30:27 PM turnstiles.Server registerType
+INFO: Client: Monitor-1 of Type: ##MONITOR## registered in appropiate client list
+Jan 03, 2017 11:31:11 PM turnstiles.Server removeHandler
+INFO: Client: Thread-3 disconnected
+Jan 03, 2017 11:31:11 PM turnstiles.Server removeHandler
+INFO: Remaining amount of clients connected: 2
+Jan 03, 2017 11:31:19 PM turnstiles.Server removeHandler
+INFO: Client: Thread-2 disconnected
+Jan 03, 2017 11:31:19 PM turnstiles.Server removeHandler
+INFO: Remaining amount of clients connected: 1
+Jan 03, 2017 11:31:25 PM turnstiles.Server removeHandler
 INFO: Client: Thread-1 disconnected
-Jan 03, 2017 11:21:04 PM turnstiles.Server removeHandler
+Jan 03, 2017 11:31:25 PM turnstiles.Server removeHandler
 INFO: Remaining amount of clients connected: 0

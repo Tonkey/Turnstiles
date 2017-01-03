@@ -7,4 +7,5 @@ public class ProtocolStrings {
   public static final String ID = "##ID##";
   public static final String INCREMENT = "##INCREMENT##";
   public static final String SPECTATORS = "##SPECTATORS##";
+  public static final String SPECTATORSDETAILED = "##SPECTATORSDETAILED##";
 }

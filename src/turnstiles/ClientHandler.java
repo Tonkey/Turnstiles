@@ -17,6 +17,8 @@ public class ClientHandler extends Thread {
     private String id = "default";
     private String type = "";
 
+    private int spectatorCount = 0;
+    
     private Scanner input;
     private PrintWriter writer;
     private Socket socket;
@@ -89,9 +91,15 @@ public class ClientHandler extends Thread {
 
                     case ProtocolStrings.INCREMENT:
                         server.incrementSpectatorNum();
+                        this.spectatorCount++;
                         break;
                     case ProtocolStrings.SPECTATORS:
                         send("Amount of spectators: " + server.getSpectatorNum());
+                        break;
+                    case ProtocolStrings.SPECTATORSDETAILED:
+                        for(ClientHandler ch : server.turnstiles){
+                            send("Spectator count: " + ch.getCount() + " for turnstile: " + ch.getClientId());
+                        }
                         break;
                     default:
                         send("Unknown Command");
@@ -132,6 +140,10 @@ public class ClientHandler extends Thread {
 
     public String getType() {
         return type;
+    }
+    
+    public int getCount(){
+        return spectatorCount;
     }
 
     private boolean checkId(String id) {
