@@ -1,0 +1,10 @@
+Jan 03, 2017 10:29:34 PM turnstiles.Server runServer
+INFO: Starting the Server
+Jan 03, 2017 10:29:34 PM turnstiles.Server runServer
+INFO: Server started. Listening on: 1337, bound to: localhost
+Jan 03, 2017 10:29:42 PM turnstiles.Server runServer
+INFO: Current amount of clients connected: 1
+Jan 03, 2017 10:30:55 PM turnstiles.Server removeHandler
+INFO: Client: Thread-1 disconnected
+Jan 03, 2017 10:30:55 PM turnstiles.Server removeHandler
+INFO: Remaining amount of clients connected: 0
